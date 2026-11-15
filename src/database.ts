@@ -7,6 +7,9 @@ export const db_pool = new Pool({
   user: server_env.DB_USER,
   password: server_env.DB_PASSWORD,
   database: server_env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 export async function database_init() {
