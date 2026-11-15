@@ -51,7 +51,7 @@
     </p>
     <p>npx tsx ./src/maliciozno/mal_stranica.ts</p>
     <label>Omogućen CSRF napad</label>
-    <input type="checkbox" id="csrf_allow" />
+    <input type="checkbox" id="csrf_allow" <%= current_user.csrf_allow ? 'checked' : '' %>/>
     <br />
     <button onclick="toggle_csrf()">Primijeni CSRF postavku</button>
 

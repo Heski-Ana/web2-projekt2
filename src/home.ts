@@ -15,6 +15,11 @@ homeRouter.get("/", async (req, res) => {
   );
   const note_num = db_res.rows[0].count;
   res.render("logged_in.ejs", {
-    current_user: { user_email, note_num, csrf_token: csrf_token },
+    current_user: {
+      user_email,
+      note_num,
+      csrf_token: csrf_token,
+      csrf_allow: req.session?.["csrf"],
+    },
   });
 });

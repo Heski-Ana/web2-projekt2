@@ -1,6 +1,6 @@
 import express from "express";
 
-const url = "https://web2-projekt2-y3j7.onrender.com/";
+const url = "https://web2-projekt2-y3j7.onrender.com";
 
 export const app = express();
 

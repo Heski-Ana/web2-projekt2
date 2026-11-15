@@ -74,6 +74,11 @@ noteRouter.post("/note/delete-all", async (req, res) => {
 
   const csrf_token = req.headers["x-csrf-token"] ?? "";
 
+  console.log("Session:", req.session);
+  console.log("Cookies:", req.headers.cookie);
+  console.log("CSRF allow:", req.session?.["csrf"]);
+  console.log("User:", req.session?.["email"]);
+
   if (!csrf_allow && csrf_token !== req.session?.["csrf_token"]) {
     res.status(403).json({
       error: "Invalid CSRF token",
