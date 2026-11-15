@@ -1,6 +1,6 @@
 import express from "express";
 import crypto from "node:crypto";
-import { db_pool } from "./database.ts";
+import { db_pool } from "./database.js";
 export const userRouter = express.Router();
 
 userRouter.post("/user/login", async (req, res) => {
@@ -15,9 +15,15 @@ userRouter.post("/user/login", async (req, res) => {
       [email],
     );
   }
-  req.session.email = email;
-  req.session.csrf = false;
-  req.session.csrf_token = crypto.randomBytes(32).toString("hex");
+
+  if (!req.session) {
+    res.sendStatus(500);
+    return;
+  }
+
+  req.session["email"] = email;
+  req.session["csrf"] = false;
+  req.session["csrf_token"] = crypto.randomBytes(32).toString("hex");
   res.sendStatus(200);
 });
 

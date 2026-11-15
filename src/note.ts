@@ -1,16 +1,16 @@
 import express from "express";
-import { db_pool } from "./database.ts";
+import { db_pool } from "./database.js";
 export const noteRouter = express.Router();
 
 noteRouter.post("/note/create", async (req, res) => {
-  const user_email = req.session.email;
+  const user_email = req.session?.["email"];
   if (user_email == undefined) {
     res.sendStatus(401);
     return;
   }
 
   try {
-    const db_res = await db_pool.query(
+    await db_pool.query(
       "INSERT INTO notes (user_email, name, text) VALUES ($1::text, $2::text, $3::text)",
       [user_email, req.body.name, req.body.text],
     );
@@ -23,14 +23,14 @@ noteRouter.post("/note/create", async (req, res) => {
 });
 
 noteRouter.post("/note/delete", async (req, res) => {
-  const user_email = req.session.email;
+  const user_email = req.session?.["email"];
   if (user_email == undefined) {
     res.sendStatus(401);
     return;
   }
 
   try {
-    const db_res = await db_pool.query(
+    await db_pool.query(
       "DELETE FROM notes WHERE name = $1::text AND user_email = $2::text",
       [req.body.name, user_email],
     );
@@ -42,7 +42,7 @@ noteRouter.post("/note/delete", async (req, res) => {
 });
 
 noteRouter.post("/note/search", async (req, res) => {
-  const user_email = req.session.email;
+  const user_email = req.session?.["email"];
   if (user_email == undefined) {
     res.sendStatus(401);
     return;
@@ -69,15 +69,16 @@ noteRouter.post("/note/search", async (req, res) => {
 });
 
 noteRouter.post("/note/delete-all", async (req, res) => {
-  const csrf_allow = req.session.csrf;
-  const user_email = req.session.email;
+  const csrf_allow = req.session?.["csrf"];
+  const user_email = req.session?.["email"];
 
   const csrf_token = req.headers["x-csrf-token"] ?? "";
 
-  if (!csrf_allow && csrf_token !== req.session.csrf_token) {
-    return res.status(403).json({
+  if (!csrf_allow && csrf_token !== req.session?.["csrf_token"]) {
+    res.status(403).json({
       error: "Invalid CSRF token",
     });
+    return;
   }
 
   if (user_email == undefined) {
@@ -86,10 +87,9 @@ noteRouter.post("/note/delete-all", async (req, res) => {
   }
 
   try {
-    const db_res = await db_pool.query(
-      "DELETE FROM notes WHERE user_email = $1::text",
-      [user_email],
-    );
+    await db_pool.query("DELETE FROM notes WHERE user_email = $1::text", [
+      user_email,
+    ]);
   } catch (error) {
     res.status(400);
     res.send(`error: ${error}`);

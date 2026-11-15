@@ -4,7 +4,7 @@ const url = "https://render";
 
 export const app = express();
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send(`
     <body onload="delete_all_malicious()">
     <p>Ovo je bezopasna stranica</p>
