@@ -24,8 +24,8 @@
 
     <p>
       Upute: SQL umetanje - upit UNION. U normalnom slučaju korisnik bi
-      pretražio valstite bilješke prema imenu bilješke. Maliciozni korisnik može
-      ovim upitom dobiti popis svih bilješki, a ne samo svojih, a time i popis
+      pretražio vlastite bilješke prema imenu bilješke. Maliciozni korisnik može
+      ovim upitom dobiti popis svih bilješki, a ne samo svojih, time i popis
       korisnika.
     </p>
     <p>Maliciozni upit: ' UNION SELECT * FROM notes --</p>
@@ -42,12 +42,12 @@
     <br />
 
     <p>
-      Niže je ponuđena mogućnost brisanja svih bilježaka prijavljenog korisnika.
+      Upute: CSRF. Niže je ponuđena mogućnost brisanja svih bilježaka prijavljenog korisnika.
       Ovaj upit moguće je pozvati s druge maliciozne stranice, ali prvo je
-      potrebno omogućiti CSRF napad primjenom CSRF postavke. Maliciozna stranica
+      potrebno omogućiti CSRF napad primjenom CSRF postavke i unutar preglednika kolačiće trećih strana. Maliciozna stranica
       može se simulirati lokalnim pokretanjem skripte
       src/maliciozno/mal_stranica.ts, paziti da se maliciozni server otvara u
-      istom pregledniku kao i render stranica. Skripta se pokreće naredbom:
+      istom pregledniku kao i Render stranica. Skripta se pokreće naredbom:
     </p>
     <p>npx tsx ./src/maliciozno/mal_stranica.ts</p>
     <label>Omogućen CSRF napad</label>
@@ -55,6 +55,7 @@
     <br />
     <button onclick="toggle_csrf()">Primijeni CSRF postavku</button>
 
+    <br />
     <button onclick="delete_all_notes()">Izbriši sve bilješke</button>
 
     <script>
