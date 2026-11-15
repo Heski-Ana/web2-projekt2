@@ -1,4 +1,5 @@
 import cookieSession from "cookie-session";
+import cors from "cors";
 import express from "express";
 import { database_init } from "./database.js";
 import { server_env } from "./env.js";
@@ -10,6 +11,18 @@ import { vulnerabilityRouter } from "./vulnerability.js";
 export const app = express();
 
 app.set("trust proxy", 1);
+
+const allowedOrigins = [
+  server_env.RENDER_EXTERNAL_URL,
+  server_env.MALICIOUS_ORIGIN,
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
 
 database_init();
 

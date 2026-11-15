@@ -12,6 +12,7 @@ export const server_env = cleanEnv(process.env, {
 
   PORT: port(),
   RENDER_EXTERNAL_URL: url(),
+  MALICIOUS_ORIGIN: url(),
 
   SAME_SITE: str(),
   HTTP_ONLY: bool(),
