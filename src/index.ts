@@ -9,6 +9,8 @@ import { vulnerabilityRouter } from "./vulnerability.js";
 
 export const app = express();
 
+app.set("trust proxy", 1);
+
 database_init();
 
 app.use(
