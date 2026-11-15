@@ -1,0 +1,16 @@
+SELECT * FROM notes WHERE user_email ='${user_email}'  AND name = '${note_name}'
+
+user_email = "test@test.hr"
+note_name = "' UNION SELECT * FROM notes --"
+SELECT * FROM notes WHERE user_email ='test@test.hr'  AND name = '' UNION SELECT * FROM notes --'
+
+
+
+
+
+<% mapped_notes.forEach(note => { %>
+        <p><%- note.text  %></p>
+        <button onclick="delete_note('<%= note.name %>')">Izbriši</button>
+        <br />
+        <p>ovo možda i ne želim</p>
+    <% }); %>
