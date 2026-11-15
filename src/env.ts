@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { cleanEnv, port, str, url } from "envalid";
+import { bool, cleanEnv, port, str, url } from "envalid";
 
 dotenv.config();
 
@@ -11,5 +11,9 @@ export const server_env = cleanEnv(process.env, {
   DB_PORT: port(),
 
   PORT: port(),
-  RENDER_EXTERNAL_URL:  url(),
+  RENDER_EXTERNAL_URL: url(),
+
+  SAME_SITE: str(),
+  HTTP_ONLY: bool(),
+  SECURE: bool(),
 });

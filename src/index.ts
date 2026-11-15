@@ -15,9 +15,14 @@ app.use(
   cookieSession({
     name: "session_id",
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: "none",
-    httpOnly: true,
-    secure: true,
+    sameSite: server_env.SAME_SITE as
+      | boolean
+      | "strict"
+      | "lax"
+      | "none"
+      | undefined,
+    httpOnly: server_env.HTTP_ONLY,
+    secure: server_env.SECURE,
     keys: ["kljuc"],
   }),
 );
